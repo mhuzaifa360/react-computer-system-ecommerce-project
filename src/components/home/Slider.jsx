@@ -2,9 +2,8 @@ import React from 'react'
 import pcsetupimg2 from '../../assets/images/home/pcsetup2.png'
 import Typography from '../common/Typography'
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import Btn from '../common/Btn';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -32,7 +31,8 @@ const Slider = () => {
                         <Typography varient='p' >Hot Sale</Typography> 
                         <Typography varient='h2' style='font-bold'>Gaming PC</Typography> 
                         <Typography varient='h2' style='font-bold'>Complete Setup</Typography> 
-                        <button className='bg-[#2196F3] text-white p-1 pl-10 pr-10 rounded-md hover:bg-[#1b84da]'>Explore</button>
+                        <Btn variant='blue'>Explore</Btn>
+                        
                     </div>
                     <div>
                         <img src={pcsetupimg2} alt="" className='w-[338px]' />

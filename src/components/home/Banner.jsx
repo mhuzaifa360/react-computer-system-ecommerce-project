@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "../common/Typography";
 import banner from "../../assets/images/home/banner.png";
+import Btn from "../common/Btn";
 
 function Banner() {
   return (
@@ -9,7 +10,7 @@ function Banner() {
       <div>
         <Typography varient="h2" style='font-semibold text-white'>Built Your Custom PC</Typography>
         <Typography varient="h2" style='font-semibold text-white'>NOW</Typography>
-        <button className="bg-white p-2 pr-6 pl-6 rounded-md text-[#2196F3]">View Details</button>
+        <Btn variant="white">View Details</Btn>
       </div>
       {/* banner image */}
       <div>

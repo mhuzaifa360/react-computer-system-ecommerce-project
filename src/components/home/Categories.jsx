@@ -44,17 +44,17 @@ function Categories() {
         })}
       </div>
       {/* products */}
-      <div className="flex flex-wrap justify-evenly w-[90%] h-[700px] ">
+      <div className="flex flex-wrap justify-evenly items-center w-[90%] h-[700px] ">
         {products.map((item, key) => {
           return (
             <div
-              className="w-[245px] h-[300px] bg-[#F8F8F8] rounded-md p-3 relative justify-center  flex flex-col hover:bg-[#DCF0FF]"
+              className="w-[245px] h-[300px] bg-[#F8F8F8] rounded-md p-3 relative justify-evenly  flex flex-col hover:bg-[#DCF0FF]"
               key={key}
             >
-              <div className="flex justify-center">
-                <img src={item.image} alt="" className="w-[200px]" />
+              <div className="flex justify-center h-[60%]">
+                <img src={item.image} alt="" className=" h-full" />
               </div>
-              <div>
+              <div className="h-[30%]">
                 <Typography varient="small" effect="muted">
                   {item.category}
                 </Typography>
@@ -63,7 +63,7 @@ function Categories() {
                 </Typography>
                 <Typography
                   varient="h5"
-                  style="font-semibold text-[#2196F3] absolute top-4"
+                  style="font-semibold text-[#2196F3] absolute top-0"
                 >
                   {item.currency}
                   {item.price}
