@@ -12,7 +12,6 @@ export const products = [
     image: pcsetup,
     price: 1800,
     currency: "$",
-    extraStyle: ''
   },
   {
     id: 2,

@@ -31,7 +31,7 @@ const Slider = () => {
                         <Typography varient='p' >Hot Sale</Typography> 
                         <Typography varient='h2' style='font-bold'>Gaming PC</Typography> 
                         <Typography varient='h2' style='font-bold'>Complete Setup</Typography> 
-                        <Btn variant='blue'>Explore</Btn>
+                        <Btn variant='blue' >Explore</Btn>
                         
                     </div>
                     <div>
