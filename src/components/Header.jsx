@@ -74,21 +74,7 @@ function Header() {
         <div className='bg-[#2196F3] '>
             
         </div>
-
-        {/* 
-
-    <div className="bg-black text-white p-2 mt-10 flex">
-      {navbar.map((item, index) => (
-        <div key={index}>
-          <Link
-            to={item.pathname}
-            className={` ${ location.pathname === item.pathname ? "bg-green-950 p-2 ml-5" : "bg-black ml-5"}`} >{item.pathvalue}  </Link>
-        </div>
-      ))
-      }
-    </div>
-
-        */}
+        
       </div>
         {/* lower navbar */}
         <div className='bg-[#2196F3] h-[49px] flex justify-evenly items-center text-white'>

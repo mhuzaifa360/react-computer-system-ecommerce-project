@@ -4,11 +4,14 @@ import Home from "./pages/Home";
 import Store from "./pages/Store";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-
+import Navigation from "./components/Navigation";
+// :Home Page, Store Page, Sign Up Page, Login Page, Product Details
 function App() {
   return (
     <div>
-      
+        {
+          
+        }
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
