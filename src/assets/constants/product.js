@@ -12,6 +12,7 @@ export const products = [
     image: pcsetup,
     price: 1800,
     currency: "$",
+    new: 'New'
   },
   {
     id: 2,
@@ -28,6 +29,7 @@ export const products = [
     image: monitor,
     price: 1800,
     currency: "$",
+    new: "New"
   },
   {
     id: 4,
@@ -36,6 +38,7 @@ export const products = [
     image: mouse,
     price: 1800,
     currency: "$",
+
   },
   {
     id: 5,
@@ -52,6 +55,7 @@ export const products = [
     image: mic,
     price: 1800,
     currency: "$",
+    new: "New"
   },
   {
     id: 7,
