@@ -5,7 +5,8 @@ function Btn({ variant = "solid", size = "md", children, className, ...props }) 
     // 1. Your Custom Color Types
     const variantStyle = {
         blue: "bg-blue-600 text-white border-blue-600 hover:bg-blue-700",
-        white: "bg-white text-blue-600 border-blue-600 hover:bg-blue-50"
+        white: "bg-white text-blue-600 border-blue-600 hover:bg-blue-50",
+        black: "bg-black text-white border-white"
     }
 
     // 2. Size now only controls text, since padding is global

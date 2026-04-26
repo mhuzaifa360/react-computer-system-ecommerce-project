@@ -5,9 +5,9 @@ import Typography from "../components/common/Typography";
 function Navigation() {
   const location = useLocation();
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center w-full">
       <div className=" w-[80%] text-[#33A0FF] p-3 ">
-        <Typography varient="h5">home {location.pathname}</Typography>
+        <Typography varient="p">home {location.pathname}</Typography>
       </div>
     </div>
   );
