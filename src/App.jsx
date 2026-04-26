@@ -9,14 +9,10 @@ import Navigation from "./components/Navigation";
 function App() {
   return (
     <div>
-        {
-          
-        }
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/store" element={<Store />} />
-          {/* <Route path="/store" element={<Store />} /> */}
           {/* <Route path="/mouse" element={<Mouse />} /> */}
           {/* <Route path="/keyboard" element={<Keyboard />} /> */}
           {/* <Route path="/accessories" element={<Accessories />} /> */}
@@ -24,7 +20,6 @@ function App() {
           {/* <Route path="/contactUs" element={<ContactUs />} /> */}
         </Routes>
         <Footer />
-
     </div>
   );
 }
