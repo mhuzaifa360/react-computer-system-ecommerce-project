@@ -4,7 +4,7 @@ function Btn({ variant = "solid", size = "md", children, className, ...props }) 
     
     // 1. Your Custom Color Types
     const variantStyle = {
-        blue: "bg-blue-600 text-white border-blue-600 hover:bg-blue-700",
+        blue: "bg-[#2196F3] text-white border-blue-600 hover:bg-blue-500",
         white: "bg-white text-blue-600 border-blue-600 hover:bg-blue-50",
         black: "bg-black text-white border-white"
     }

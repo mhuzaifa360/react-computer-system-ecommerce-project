@@ -10,13 +10,13 @@ function ProductDetails() {
     <div className='flex flex-col items-center'>
         <Navigation />
         {/* MAIN CONTAINER */}
-        <div className='bg-slate-200 w-[90%] flex'>
+        <div className=' w-[90%] flex'>
             {/* PRODUCT DATA */}
-            <div className='bg-slate-400 w-full'>
+            <div className=' w-full'>
                 {/* UPPER */}
-                <div className='bg-red-400 w-[70%] h-[400px]'>
+                <div className=' w-[75%] h-[400px]'>
                     {/* LEFT */}
-                    <div className='h-full'>
+                    <div className='h-full '>
                         <ProductData />
                     </div>
                     {/* RIGHT */}
