@@ -16,7 +16,7 @@ function Login() {
       <div className=' w-[350px] h-[350px] '>
         <form action="" className='flex flex-col justify-evenly  h-full '>
             <div>
-            <Typography varient='h4'>Sign In</Typography>
+            <Typography varient='h4' style='font-semibold'>Sign In</Typography>
             <Typography varient='small'>Upgrade your tech game with us!</Typography>
             </div>
             {/* email */}

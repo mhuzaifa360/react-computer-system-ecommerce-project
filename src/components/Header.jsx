@@ -72,9 +72,6 @@ function Header() {
           <Link to={"/login"}>
             <img src={user} alt="" />
           </Link>
-          <Link to={"/signup"}>
-            <img src={user} alt="" />
-          </Link>
         </div>
 
         {/* lower navbar */}
