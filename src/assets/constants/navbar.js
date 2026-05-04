@@ -33,5 +33,10 @@ export const menus = [
         id: 7,
         pathName: "/contact_us",
         pathValue: "Contact Us"
+    },
+    {
+        id: 8,
+        pathName: "/user_list",
+        pathValue: "Users List"
     }
 ]

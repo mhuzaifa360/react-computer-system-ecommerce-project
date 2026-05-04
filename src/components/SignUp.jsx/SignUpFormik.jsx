@@ -9,13 +9,14 @@ const SignUpFormik = () => {
     // LOADER TRUE IF ANY ERROR
   const [loader, setLoader] = useState(false);
 //   FUNCTION FOR API 
-  const createUser = async (values) => {
+  const createUser = async (values ) => {
     setLoader(true);
     const response = await axios.post(
       "http://localhost:3000/v1/createUser",
       values,
     );
     setLoader(false);
+
   };
   return (
     <div className="flex justify-center items-center p-3">

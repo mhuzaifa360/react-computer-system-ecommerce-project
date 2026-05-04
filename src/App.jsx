@@ -9,6 +9,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp.jsx/SignUp";
 import SignUpFormik from "./components/SignUp.jsx/SignUpFormik";
+import UserList from "./pages/UserList";
 // :Home Page, Store Page, Sign Up Page, Login Page, Product Details
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signupformik" element={<SignUpFormik />} />
+          <Route path="/user_list" element={<UserList />} />
         </Routes>
         <Footer />
     </div>
