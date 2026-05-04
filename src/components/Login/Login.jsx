@@ -38,7 +38,7 @@ function Login() {
             </div>
         <div className='flex'>
             <Typography varient='small'>Don't have an account? </Typography>
-            <Link to={'/signup'}>Sign Up</Link>
+            <Link to={'/signupformik'}>Sign Up</Link>
         </div>
         </form>
       </div>

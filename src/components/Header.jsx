@@ -41,7 +41,9 @@ function Header() {
       <div className="px-20 flex flex-row justify-between items-center h-[80px]">
         {/* for logo */}
         <div className="h-[40px]">
+          <Link to={"/"}>
           <h1 className="text-blue-600 font-bold text-2xl">LOGO HERE</h1>
+          </Link>
         </div>
 
         {/* for search and categories */}

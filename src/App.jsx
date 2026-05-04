@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import ProductDetails from "./pages/ProductDetails";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp.jsx/SignUp";
+import SignUpFormik from "./components/SignUp.jsx/SignUpFormik";
 // :Home Page, Store Page, Sign Up Page, Login Page, Product Details
 function App() {
   return (
@@ -19,11 +20,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* <Route path="/mouse" element={<Mouse />} /> */}
-          {/* <Route path="/keyboard" element={<Keyboard />} /> */}
-          {/* <Route path="/accessories" element={<Accessories />} /> */}
-          {/* <Route path="/aboutUs" element={<AboutUs />} /> */}
-          {/* <Route path="/contactUs" element={<ContactUs />} /> */}
+          <Route path="/signupformik" element={<SignUpFormik />} />
         </Routes>
         <Footer />
     </div>
