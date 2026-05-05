@@ -15,6 +15,7 @@ const SignUpFormik = () => {
       "http://localhost:3000/v1/createUser",
       values,
     );
+    
     setLoader(false);
 
   };
@@ -47,6 +48,7 @@ const SignUpFormik = () => {
         })}
         onSubmit={(values) => {
           createUser(values);
+          // resetForm();
         }}
       >
         <Form className="w-[390px] flex flex-col gap-2 p-2">
