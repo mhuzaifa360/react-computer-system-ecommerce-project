@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+// REACT ICONS
 import {
   MdModeEdit,
   MdDashboard,
@@ -11,9 +13,8 @@ import {
 } from "react-icons/md";
 import { FaTrash, FaUserPlus, FaList } from "react-icons/fa6";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-
+// CUSTOM COMPONENTS
 import Typography from "../components/common/Typography";
-import { useNavigate } from "react-router";
 import UserForm from "../components/UserForm";
 import DashboardHome from "../components/DashboardHome";
 import UsersList from "../components/UserList";
@@ -24,9 +25,11 @@ const Dashboard = () => {
   const [loader, setLoader] = useState(false);
   const [users, setUsers] = useState([]);
   const [sigleUser, setSingleUser] = useState({});
+  const [singleCategory, setSingleCategory] = useState({});
   const [activeMenu, setActiveMenu] = useState("dashboard");
   const navigate = useNavigate();
 
+  // USER DATA GET FROM SERVER
   const getAllUsers = async () => {
     try {
       const response = await axios.get("http://localhost:3000/v1/getUser");
@@ -49,7 +52,9 @@ const Dashboard = () => {
 
   const getSigleUser = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3000/v1/getSingleUser/${id}`);
+      const response = await axios.get(
+        `http://localhost:3000/v1/getSingleUser/${id}`,
+      );
       setSingleUser(response?.data?.data);
       setActiveMenu("users"); // Switch to users tab when editing
       // Scroll to form
@@ -85,6 +90,67 @@ const Dashboard = () => {
     }
   };
 
+  // CATEGORY DATA GET FROM SERVER
+  const getAllCategory = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/v1/getCategory");
+      setUsers(response.data.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const deleteCategory = async (id) => {
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      try {
+        await axios.delete(`http://localhost:3000/v1/deleteCategory/${id}`);
+        getAllCategory();
+      } catch (error) {
+        console.error("Error deleting category:", error);
+      }
+    }
+  };
+
+  const getSingleCategory = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/v1/getSingleCategory/${id}`,
+      );
+      setSingleCategory(response?.data?.data);
+      setActiveMenu("category"); // Switch to category tab when editing
+      // Scroll to form
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      console.error("Error fetching category:", error);
+    }
+  };
+
+  const updateCategory = async (id, values) => {
+    try {
+      await axios.put(`http://localhost:3000/v1/updateCategory/${id}`, values);
+      setSingleCategory({});
+      getAllCategory();
+    } catch (error) {
+      console.error("Error updating category:", error);
+    }
+  };
+
+  const createCategory = async (values) => {
+    setLoader(true);
+    try {
+      await axios.post("http://localhost:3000/v1/createCategory", values);
+      setLoader(false);
+      getAllCategory();
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      console.error("Error creating category:", error);
+      setLoader(false);
+    }
+  };
+
   useEffect(() => {
     getAllUsers();
   }, []);
@@ -103,6 +169,7 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar Menu */}
       <aside className="w-64 bg-gray-900 text-white flex flex-col shadow-lg">
+        {/* DASHBOARD NAME */}
         <div className="p-6 border-b border-gray-700">
           <Typography varient="h4" className="text-white">
             Admin Dashboard
@@ -110,6 +177,7 @@ const Dashboard = () => {
           <p className="text-gray-400 text-sm mt-1">Manage your application</p>
         </div>
 
+        {/* DASHBOARD LIST  */}
         <nav className="flex-1 mt-6">
           {menuItems.map((item) => (
             <button
@@ -130,6 +198,7 @@ const Dashboard = () => {
           ))}
         </nav>
 
+        {/* LOGOUT BUTTON */}
         <div className="p-6 border-t border-gray-700">
           <button
             onClick={() => navigate("/")}
@@ -153,6 +222,7 @@ const Dashboard = () => {
               {activeMenu === "dashboard" && "Dashboard Overview"}
               {activeMenu === "users" && "User Management"}
               {activeMenu === "settings" && "System Settings"}
+              {activeMenu === "category" && "Categories List"}
             </Typography>
             <p className="text-gray-600 mt-2">
               {activeMenu === "dashboard" &&
@@ -161,16 +231,19 @@ const Dashboard = () => {
                 "Manage your users, add new users, or edit existing ones."}
               {activeMenu === "settings" &&
                 "Configure your application settings and preferences."}
+              {activeMenu === "category" &&
+                "List of Categories for all products"}
             </p>
           </div>
 
-          {/* Content based on active menu */}
+          {/* DASHBOARD HOME CONTENT */}
           {activeMenu === "dashboard" && <DashboardHome />}
 
+          {/* USERS CONTENT */}
           {activeMenu === "users" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="flex flex-col gap-5 ">
               {/* Left Column - User Form */}
-              <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="bg-white rounded-lg shadow-md p-4">
                 <UserForm
                   sigleUser={sigleUser}
                   loader={loader}
@@ -191,9 +264,11 @@ const Dashboard = () => {
             </div>
           )}
 
+          {/* CATEGORY CONTENT */}
           {activeMenu === "category" && (
-            <div className="w-full flex items-center justify-center">
-              <Category />
+            <div className="w-full flex items-center justify-center ">
+                <Category />
+              
             </div>
           )}
         </div>

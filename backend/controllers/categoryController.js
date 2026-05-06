@@ -1,5 +1,4 @@
 import category from "../models/categoryModel.js";
-import bcrypt from "bcrypt";
 // for create Category
 export const createCategory = async (req, res) => {
   try {
@@ -7,37 +6,18 @@ export const createCategory = async (req, res) => {
 
     // CHECK IF ALREADY EXIST
     const existCategory = await category.findOne({
-      where: { email: clientData.email },
+      where: { categoryName: clientData.categoryName },
     });
     if (existCategory) {
       return res.status(400).json({
         success: false,
-        message: `This ${clientData.email} category email already exist!`,
+        message: `This ${clientData.categoryName}  categoryName already exist!`,
       });
     }
     
-    // CONVERT PASSWORD INTO HASH
-    const hashPassword = await bcrypt.hash(clientData.password, 10);
-    const newCategory = await category.create({ ...clientData, password: hashPassword });
-
-    // TO HIDE PASSWORD
-    // const hygienPassword = {
-    //   id: Category.id,
-    //   firstName: Category.firstName,
-    //   lastName: Category.lastName,
-    //   email: Category.email,
-    //   role: Category.role,
-    //   updatedAt: category.updatedAt,
-    //   createdAt: category.createdAt,
-    // };
-
-    // TO HIDE PASSWORD SHORT METHOD
-    const categoryData = newCategory.toJSON();
-    delete categoryData.password;
-    delete categoryData.confirmPassword;
     
     // CREATE IF NOT EXIST
-    // const CategoryData = await Category.create(clientData);
+    const categoryData = await category.create(clientData);
     return res.status(201).json({
       success: true,
       message: "Category successfully created",
@@ -78,13 +58,13 @@ export const deleteCategory = async (req, res) => {
     const categoryID = req.params.id;
     // Category is table name
     const existCategory = await category.findOne({ where: { id: categoryID } });
-    console.log("exist Category", existCategory);
+    // console.log("exist Category", existCategory);
 
     // IF Category ID NOT FOUND
     if (!existCategory) {
       res.status(404).json({
         success: false,
-        message: `Category not found with this id ${existCategory}`,
+        message: `Category not found with this id ${categoryID}`,
       });
     }
     // DELETE Category WITH MATCHING ID
@@ -111,14 +91,14 @@ export const deleteCategory = async (req, res) => {
 export const getSingleCategory = async (req, res) => {
   try {
     const categoryID = req.params.id;
-    // Category is table name
-    const existCategory = await category.findByPk(CategoryID);
+    // category is table name
+    const existCategory = await category.findByPk(categoryID);
 
     // IF Category ID NOT FOUND
     if (!existCategory) {
       res.status(404).json({
         success: false,
-        message: `Category not found with this id ${existCategory}`,
+        message: `Category not found with this ${categoryID} id`,
       });
     }
 
@@ -159,7 +139,7 @@ export const updateCategory = async (req, res) => {
     res.json({
       success: true,
       message: `Category updated successfully `,
-      data: CategoryData,
+      data: categoryData,
     });
   } catch (error) {
     res.status(500).json({

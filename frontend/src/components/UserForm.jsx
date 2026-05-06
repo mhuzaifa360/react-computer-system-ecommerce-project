@@ -57,10 +57,13 @@ const UserForm = ({
     >
       {({ values, handleChange }) => (
         <Form className="space-y-6">
+
           <div className="flex justify-between items-center mb-6">
+            {/* FORM TITLE */}
             <Typography varient="h3">
               {sigleUser?.id ? "Edit User" : "Add New User"}
             </Typography>
+            
             {sigleUser?.id && (
               <button
                 type="button"
@@ -72,6 +75,7 @@ const UserForm = ({
             )}
           </div>
 
+            {/* FORM */}
           <div>
             <label
               htmlFor="firstName"
@@ -84,6 +88,8 @@ const UserForm = ({
               onChange={handleChange}
               name="firstName"
               type="text"
+              className="bg-slate-200 w-full p-2 rounded-md"
+              placeholder="First Name ..."
             />
             <ErrorMessage
               name="firstName"
@@ -91,7 +97,6 @@ const UserForm = ({
               className="text-red-500 text-sm mt-1"
             />
           </div>
-
           <div>
             <label
               htmlFor="lastName"
@@ -104,6 +109,8 @@ const UserForm = ({
               onChange={handleChange}
               name="lastName"
               type="text"
+              className="bg-slate-200 w-full p-2 rounded-md"
+              placeholder="Last Name ..."
             />
             <ErrorMessage
               name="lastName"
@@ -121,6 +128,8 @@ const UserForm = ({
               onChange={handleChange}
               name="email"
               type="email"
+              className="bg-slate-200 w-full p-2 rounded-md"
+              placeholder="myname@gmail.com"
             />
             <ErrorMessage
               name="email"
@@ -141,6 +150,8 @@ const UserForm = ({
                 name="password"
                 onChange={handleChange}
                 type="password"
+                className="bg-slate-200 w-full p-2 rounded-md"
+              placeholder="Password..."
               />
               <ErrorMessage
                 name="password"

@@ -1,6 +1,7 @@
 import express from "express";
 import database from "sequelize";
 import userRoutes from "./routes/userRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js"
 import { connectDB } from "./config/database.js";
 import cors from "cors"
 const app = express();
