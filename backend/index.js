@@ -25,4 +25,5 @@ async function initializeApp() {
 }
 
 app.use("/v1", userRoutes);
+app.use("/v1", categoryRoutes);
 initializeApp();

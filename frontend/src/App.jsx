@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, BrowserRouter } from "react-router";
+import { Route, Routes, BrowserRouter, useLocation } from "react-router";
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import Footer from "./components/Footer";
@@ -13,9 +13,14 @@ import UserList from "./pages/UserList";
 import Dashboard from "./pages/Dashboard";
 // :Home Page, Store Page, Sign Up Page, Login Page, Product Details
 function App() {
+  const location = useLocation();
+
   return (
     <div>
-        <Header />
+        {
+          location.pathname !== "/dashboard" && <Header />
+        }
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/store" element={<Store />} />
@@ -25,8 +30,12 @@ function App() {
           <Route path="/signupformik" element={<SignUpFormik />} />
           <Route path="/user_list" element={<UserList />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
+        {
+          location.pathname !== "/dashboard" && <Footer />
+        }
     </div>
   );
 }
