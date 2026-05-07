@@ -37,9 +37,11 @@ const Category = () => {
   // ================= GET SINGLE CATEGORY =================
   const getSingleCategory = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3000/v1/getCategory/${id}`);
+      const response = await axios.get(`http://localhost:3000/v1/getSingleCategory/${id}`);
+      // console.log(response);
+      
       if (response.data) {
-        setEditingCategory(response.data);
+        setEditingCategory(response.data.data);
       }
     } catch (error) {
       console.error("Error fetching category:", error);
@@ -84,7 +86,7 @@ const Category = () => {
   const deleteCategory = async (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
-        await axios.delete(`http://localhost:3000/v1/category/${id}`);
+        await axios.delete(`http://localhost:3000/v1/deleteCategory/${id}`);
         await getCategories();
         alert("Category deleted successfully!");
       } catch (error) {
@@ -105,17 +107,17 @@ const Category = () => {
           <Formik
             enableReinitialize={true}
             initialValues={{
-              category: editingCategory?.category || "",
+              categoryName: editingCategory?.categoryName || "",
             }}
             validationSchema={Yup.object({
-              category: Yup.string()
+              categoryName: Yup.string()
                 .required("Category name is required")
                 .min(2, "Category name must be at least 2 characters")
                 .max(50, "Category name must be less than 50 characters"),
             })}
             onSubmit={(values, { resetForm }) => {
-              if (editingCategory?._id) {
-                updateCategory(editingCategory._id, values, resetForm);
+              if (editingCategory?.id) {
+                updateCategory(editingCategory.id, values, resetForm);
               } else {
                 createCategory(values, resetForm);
               }
@@ -128,21 +130,22 @@ const Category = () => {
                     Category Name
                   </label>
                   <input
-                    name="category"
+                    name="categoryName"
                     type="text"
-                    value={values.category}
+                    value={values.categoryName}
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter category name..."
                   />
                   <ErrorMessage
-                    name="category"
+                    name="categoryName"
                     component="div"
                     className="text-red-500 text-sm mt-1"
                   />
                 </div>
 
                 <div className="flex gap-3">
+                  
                   <button
                     type="submit"
                     disabled={loading || isSubmitting}
@@ -152,6 +155,7 @@ const Category = () => {
                   </button>
                   
                   {editingCategory && (
+
                     <button
                       type="button"
                       onClick={() => {
@@ -186,23 +190,25 @@ const Category = () => {
               </thead>
               <tbody>
                 {categories?.map((category, index) => (
-                  <tr key={category?._id} className="hover:bg-gray-50 transition">
+                  <tr key={category?.id} className="hover:bg-gray-50 transition">
                     <td className="p-4 border border-gray-300">{index + 1}</td>
-                    <td className="p-4 border border-gray-300">{category?._id}</td>
+                    <td className="p-4 border border-gray-300">{category?.id}</td>
                     <td className="p-4 border border-gray-300">
-                      <span className="font-medium">{category?.category}</span>
+                      <span className="font-medium">{category?.categoryName}</span>
                     </td>
                     <td className="p-4 border border-gray-300">
                       <div className="flex items-center gap-3">
+                        {/* BUTTON FOR EDIT */}
                         <button
-                          onClick={() => getSingleCategory(category?._id)}
+                          onClick={() => getSingleCategory(category?.id)}
                           className="p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md transition"
                           title="Edit Category"
                         >
                           <MdModeEdit size={18} />
                         </button>
+                        {/* BUTTON FOR DELETE */}
                         <button
-                          onClick={() => deleteCategory(category?._id)}
+                          onClick={() => deleteCategory(category?.id)}
                           className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition"
                           title="Delete Category"
                         >
