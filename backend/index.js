@@ -2,6 +2,7 @@ import express from "express";
 import database from "sequelize";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js"
+import productRoutes from "./routes/productRoutes.js"
 import { connectDB } from "./config/database.js";
 import cors from "cors"
 const app = express();
@@ -27,4 +28,5 @@ async function initializeApp() {
 
 app.use("/v1", userRoutes);
 app.use("/v1", categoryRoutes);
+app.use("/v1", productRoutes);
 initializeApp();
