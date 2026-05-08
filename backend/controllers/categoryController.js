@@ -1,4 +1,7 @@
+
 import category from "../models/categoryModel.js";
+import user from "../models/userModel.js";
+import jwt from "jsonwebtoken";
 // for create Category
 export const createCategory = async (req, res) => {
   try {
@@ -14,8 +17,7 @@ export const createCategory = async (req, res) => {
         message: `This ${clientData.categoryName}  categoryName already exist!`,
       });
     }
-    
-    
+
     // CREATE IF NOT EXIST
     const categoryData = await category.create(clientData);
     return res.status(201).json({
@@ -37,7 +39,7 @@ export const createCategory = async (req, res) => {
 export const getCategory = async (req, res) => {
   try {
     const allCategory = await category.findAll();
-    
+
     res.status(200).json({
       success: true,
       message: "Retrieve all Category successfully",
@@ -147,5 +149,78 @@ export const updateCategory = async (req, res) => {
       message: "network error",
       error: error.message,
     });
+  }
+};
+
+// LOGIN AUTHENTICATION
+export const loginUser = async (req, res) => {
+  try {
+    // TAKE EMAIL AND PASSWORD FROM CLIENT
+    const { email, password } = req.body;
+
+    // CHECK EMAIL GIVEN OR NOT
+    if (!email) {
+      return res.status(400).json({
+        status: false,
+        message: "email is required",
+      });
+    }
+    // CHECK PASSWORD IS GIVEN OR NOT
+    if (!password) {
+      return res.status(400).json({
+        status: false,
+        message: " password is required",
+      });
+    }
+
+    // TAKE RECORD OF USER WITH EMAIL FROM DATABASE
+    const user = await user.findOne({ where: { email: email } });
+
+    // IF EMAIL NOT MATCH TO DATABASE EMAIL IT WILL SHOW THE RESULT
+    if (!user) {
+      return res.status(400).json({
+        status: false,
+        message: `user not register with this email ${email}`,
+      });
+    }
+    // IF PASSWORD INCORRECT DISPLAY MESSAGE
+    const isValidPassword = await bcrypt.compare(password, user.password);
+
+    if (!isValidPassword) {
+      res.status(400).json({
+        status: false,
+        message: "password is incorrect",
+      });
+    }
+
+    const excludePassword = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+    };
+
+    // CREATE TOKEN FOR USER
+    // PymYMEpDfKdF•••••••••••••••••••nkjbu85DGqBd
+    const token = await jwt.sign(
+      excludePassword,
+      "PymYMEpDfKdF•••••••••••••••••••nkjbu85DGqBd",
+      {
+        expiresIn: "2d",
+      },
+    );
+
+    res.json({
+      status: true,
+      message: "login Successfully",
+      data: excludePassword,
+      token: token,
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "internal server error",
+      error: error.message,
+    })
   }
 };
