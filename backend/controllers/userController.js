@@ -1,5 +1,80 @@
 import user from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+// LOGIN AUTHENTICATION
+export const loginUser = async (req, res) => {
+  try {
+    // TAKE EMAIL AND PASSWORD FROM CLIENT
+    const { email, password } = req.body;
+
+    // CHECK EMAIL GIVEN OR NOT
+    if (!email) {
+      return res.status(400).json({
+        status: false,
+        message: "email is required",
+      });
+    }
+    // CHECK PASSWORD IS GIVEN OR NOT
+    if (!password) {
+      return res.status(400).json({
+        status: false,
+        message: " password is required",
+      });
+    }
+
+    // TAKE RECORD OF USER WITH EMAIL FROM DATABASE
+    const findUser = await user.findOne({ where: { email: email } });
+
+    // IF EMAIL NOT MATCH TO DATABASE EMAIL IT WILL SHOW THE RESULT
+    if (!findUser) {
+      return res.status(400).json({
+        status: false,
+        message: `user not register with this email ${email}`,
+      });
+    }
+    // IF PASSWORD INCORRECT DISPLAY MESSAGE
+    const isValidPassword = await bcrypt.compare(password, findUser.password);
+
+    if (!isValidPassword) {
+      res.status(400).json({
+        status: false,
+        message: "password is incorrect",
+      });
+    }
+
+    const excludePassword = {
+      id: findUser.id,
+      firstName: findUser.firstName,
+      lastName: findUser.lastName,
+      email: findUser.email,
+      role: findUser.role,
+    };
+
+    // CREATE TOKEN FOR USER
+    // PymYMEpDfKdF•••••••••••••••••••nkjbu85DGqBd
+    const token = await jwt.sign(
+      excludePassword,
+      "PymYMEpDfKdF•••••••••••••••••••nkjbu85DGqBd",
+      {
+        expiresIn: "2d",
+      },
+    );
+
+    res.json({
+      status: true,
+      message: "login Successfully",
+      data: excludePassword,
+      token: token,
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "internal server error",
+      error: error.message,
+    })
+  }
+};
+
 // for create user
 export const createUser = async (req, res) => {
   try {

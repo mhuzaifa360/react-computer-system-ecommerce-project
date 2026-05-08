@@ -1,6 +1,6 @@
 import express from "express"
 import { createUser, deleteUser, getSingleUser, getUser, updateUser } from "../controllers/userController.js";
-import { loginUser } from "../controllers/categoryController.js";
+import { loginUser } from "../controllers/userController.js";
 const route = express.Router();
 
 route.post("/login", loginUser)
