@@ -1,6 +1,7 @@
 import user from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { generateToken } from "../auth/authentication.js";
 
 // LOGIN AUTHENTICATION
 export const loginUser = async (req, res) => {
@@ -51,15 +52,18 @@ export const loginUser = async (req, res) => {
       role: findUser.role,
     };
 
+    const token = generateToken(user)
+
+
     // CREATE TOKEN FOR USER
     // PymYMEpDfKdF•••••••••••••••••••nkjbu85DGqBd
-    const token = await jwt.sign(
-      excludePassword,
-      "PymYMEpDfKdF•••••••••••••••••••nkjbu85DGqBd",
-      {
-        expiresIn: "2d",
-      },
-    );
+    // const token = await jwt.sign(
+    //   excludePassword,
+    //   "PymYMEpDfKdF•••••••••••••••••••nkjbu85DGqBd",
+    //   {
+    //     expiresIn: "2d",
+    //   },
+    // );
 
     res.json({
       status: true,

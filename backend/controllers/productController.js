@@ -1,26 +1,54 @@
 import products from "../models/productModel.js"
+import fs from "fs"
+import path from "path";
+import { fileURLToPath } from "url";
+
+
+// for file name and path global
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // for create product
 export const createProduct = async (req, res) => {
   try {
-    const clientData = req.body;
+    const {
+      productName,
+      productPrice,
+      productAvailability,
+      productCategory,
+      freeShipping,
+      productDescription
+    } = req.body;
+
+    const image = req.file ? req.file.filename : null;
+    
 
     // CHECK IF ALREADY EXIST
     const existProduct = await products.findOne({
-      where: { productName: clientData.productName },
+      where: { productName: productName },
     });
     if (existProduct) {
       return res.status(400).json({
         success: false,
-        message: `This ${clientData.productName}  productName already exist!`,
+        message: `This ${productName}  productName already exist!`,
       });
     }
+
     // CREATE IF NOT EXIST
-    const  productData= await products.create(clientData);
+    const product = await products.create({
+      productName,
+      productPrice,
+      productAvailability,
+      productCategory,
+      freeShipping,
+      productDescription,
+      productImage:image
+    })
+
     return res.status(201).json({
       success: true,
       message: "Product successfully created",
-      data: productData,
+      data: product,
     });
 
     // CHECK IF ERROR FOUND

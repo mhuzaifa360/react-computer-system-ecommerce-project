@@ -31,6 +31,10 @@ const products = database.define("products",{
         type: DataTypes.STRING,
         allowNull: false,
     },
+    productDescription: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
 })
 
 export default products;
