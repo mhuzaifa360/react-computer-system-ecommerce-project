@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router";
 import { menus } from "../assets/constants/navbar";
 import cart from "../assets/images/home/cart.svg";
 import user from "../assets/images/home/user.svg";
+import UserProfile from "./UserProfile";
 
 function Header() {
   const location = useLocation();
@@ -38,16 +39,16 @@ function Header() {
       </div>
 
       {/* mid navbar */}
-      <div className="px-20 flex flex-row justify-between items-center h-[80px]">
+      <div className="px-20 flex justify-between items-center h-[80px]">
         {/* for logo */}
         <div className="h-[40px]">
           <Link to={"/"}>
-          <h1 className="text-blue-600 font-bold text-2xl">LOGO HERE</h1>
+            <h1 className="text-blue-600 font-bold text-2xl">LOGO HERE</h1>
           </Link>
         </div>
 
         {/* for search and categories */}
-        <div className="flex justify-center w-[473px] h-[40px]">
+        <div className="flex justify-center items-center h-[40px]">
           {/*  */}
           <form action="" className="h[40px] w-[100%] ">
             <select name="" id="" className="h-[100%] bg-[#F8F8F8] rounded-md">
@@ -72,21 +73,29 @@ function Header() {
           </a>
           {/* LOGIN ICON */}
           <Link to={"/login"}>
-            <img src={user} alt="" />
+            <UserProfile />
           </Link>
         </div>
 
-        {/* lower navbar */}
-        <div className="bg-[#2196F3] "></div>
       </div>
+
       {/* lower navbar */}
       <div className="bg-[#2196F3] h-[49px] flex justify-evenly items-center text-white">
         {menus?.map((item) => {
+          // dashboard hide for user
+          if (item.pathValue === "Dashboard" && item.role === "user") {
+            return null;
+          }
+
           return (
             <Link
               key={item.id}
               to={item.pathName}
-              className={`${location?.pathname === item.pathName ? "underline text-white" : ""}`}
+              className={`${
+                location?.pathname === item.pathName
+                  ? "underline text-white"
+                  : ""
+              }`}
             >
               {item.pathValue}
             </Link>

@@ -13,12 +13,15 @@ import {
 } from "react-icons/md";
 import { FaTrash, FaUserPlus, FaList } from "react-icons/fa6";
 import { BiSolidCategoryAlt } from "react-icons/bi";
+import { MdProductionQuantityLimits } from "react-icons/md";
+
 // CUSTOM COMPONENTS
 import Typography from "../components/common/Typography";
 import UserForm from "../components/UserForm";
 import DashboardHome from "../components/DashboardHome";
 import UsersList from "../components/UserList";
 import Category from "../components/Category";
+import Products from "../components/Products";
 
 // Main Dashboard Component
 const Dashboard = () => {
@@ -163,6 +166,11 @@ const Dashboard = () => {
       label: "Category",
       icon: <BiSolidCategoryAlt size={22} />,
     },
+    {
+      id: "products",
+      label: "Products",
+      icon: <MdProductionQuantityLimits size={22} />,
+    },
   ];
 
   return (
@@ -223,6 +231,7 @@ const Dashboard = () => {
               {activeMenu === "users" && "User Management"}
               {activeMenu === "settings" && "System Settings"}
               {activeMenu === "category" && "Categories List"}
+              {activeMenu === "products" && "Product List"}
             </Typography>
             <p className="text-gray-600 mt-2">
               {activeMenu === "dashboard" &&
@@ -233,6 +242,8 @@ const Dashboard = () => {
                 "Configure your application settings and preferences."}
               {activeMenu === "category" &&
                 "List of Categories for all products"}
+              {activeMenu === "products" &&
+                "Insert and Display all products"}
             </p>
           </div>
 
@@ -268,6 +279,14 @@ const Dashboard = () => {
           {activeMenu === "category" && (
             <div className="w-full flex items-center justify-center ">
                 <Category />
+              
+            </div>
+          )}
+
+          {/*PRODUCT CONTENT */}
+          {activeMenu === "products" && (
+            <div className="w-full flex items-center justify-center ">
+                <Products />
               
             </div>
           )}

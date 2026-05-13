@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
 
@@ -18,9 +17,7 @@ const Login = () => {
 
   // VALIDATION
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("Invalid Email")
-      .required("Email is required"),
+    email: Yup.string().email("Invalid Email").required("Email is required"),
 
     password: Yup.string()
       .required("Password is required")
@@ -36,26 +33,26 @@ const Login = () => {
       // API CALL
       const response = await axios.post(
         "http://localhost:3000/v1/login",
-        values
+        values,
       );
 
-      console.log(response.data);
+      // console.log(response.data);
 
       // TOKEN SAVE
-      localStorage.setItem("token", response.data.token);
-
+        localStorage.setItem(
+          "userData",
+          JSON.stringify(response.data.data)
+        );
+        
       // RESET FORM
       resetForm();
 
       // REDIRECT
       navigate("/dashboard");
-
     } catch (err) {
       console.log(err);
 
-      setError(
-        err?.response?.data?.message || "Login Failed"
-      );
+      setError(err?.response?.data?.message || "Login Failed");
     } finally {
       setLoader(false);
     }
@@ -63,13 +60,9 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-slate-100 px-4">
-
       <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg">
-
         {/* HEADING */}
-        <h1 className="text-3xl font-bold text-center mb-6">
-          Login
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
 
         {/* FORM */}
         <Formik
@@ -79,12 +72,9 @@ const Login = () => {
         >
           {({ values, handleChange }) => (
             <Form className="space-y-5">
-
               {/* EMAIL */}
               <div>
-                <label className="block mb-2 font-medium">
-                  Email
-                </label>
+                <label className="block mb-2 font-medium">Email</label>
 
                 <input
                   type="email"
@@ -104,9 +94,7 @@ const Login = () => {
 
               {/* PASSWORD */}
               <div>
-                <label className="block mb-2 font-medium">
-                  Password
-                </label>
+                <label className="block mb-2 font-medium">Password</label>
 
                 <input
                   type="password"
@@ -125,11 +113,7 @@ const Login = () => {
               </div>
 
               {/* ERROR MESSAGE */}
-              {error && (
-                <div className="text-red-500 text-sm">
-                  {error}
-                </div>
-              )}
+              {error && <div className="text-red-500 text-sm">{error}</div>}
 
               {/* BUTTON */}
               <button
@@ -139,11 +123,9 @@ const Login = () => {
               >
                 {loader ? "Logging in..." : "Login"}
               </button>
-
             </Form>
           )}
         </Formik>
-
       </div>
     </div>
   );
