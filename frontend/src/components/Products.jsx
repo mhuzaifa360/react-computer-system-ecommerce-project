@@ -92,7 +92,6 @@ const Products = () => {
 
   return (
     <div className="flex flex-col gap-6 w-full">
-
       {/* ================= FORM ================= */}
       <div className="bg-white p-6 rounded shadow">
         <Typography varient="h3">
@@ -105,7 +104,8 @@ const Products = () => {
             productName: editingProduct?.productName || "",
             productPrice: editingProduct?.productPrice || "",
             productCategory: editingProduct?.productCategory || "",
-            productAvailability: editingProduct?.productAvailability || "In Stock",
+            productAvailability:
+              editingProduct?.productAvailability || "In Stock",
             freeShipping: editingProduct?.freeShipping || false,
             productDescription: editingProduct?.productDescription || "",
             productImage: null,
@@ -123,7 +123,10 @@ const Products = () => {
             formData.append("productPrice", values.productPrice);
             formData.append("productCategory", values.productCategory);
             formData.append("productAvailability", values.productAvailability);
-            formData.append("freeShipping", values.freeShipping);
+            formData.append(
+              "freeShipping",
+              values.freeShipping ? "true" : "false",
+            );
             formData.append("productDescription", values.productDescription);
 
             if (values.productImage) {
@@ -139,7 +142,6 @@ const Products = () => {
         >
           {({ values, handleChange, setFieldValue }) => (
             <Form className="space-y-4 mt-4">
-
               {/* NAME */}
               <input
                 name="productName"
@@ -148,7 +150,11 @@ const Products = () => {
                 placeholder="Product Name"
                 className="w-full p-2 bg-slate-200 rounded"
               />
-              <ErrorMessage name="productName" component="div" className="text-red-500" />
+              <ErrorMessage
+                name="productName"
+                component="div"
+                className="text-red-500"
+              />
 
               {/* PRICE */}
               <input
@@ -158,6 +164,11 @@ const Products = () => {
                 onChange={handleChange}
                 placeholder="Price"
                 className="w-full p-2 bg-slate-200 rounded"
+              />
+              <ErrorMessage
+                name="productPrice"
+                component="div"
+                className="text-red-500"
               />
 
               {/* CATEGORY DROPDOWN */}
@@ -174,6 +185,11 @@ const Products = () => {
                   </option>
                 ))}
               </select>
+              <ErrorMessage
+                name="productCategory"
+                component="div"
+                className="text-red-500"
+              />
 
               {/* AVAILABILITY */}
               <select
@@ -185,6 +201,11 @@ const Products = () => {
                 <option value="In Stock">In Stock</option>
                 <option value="Out Of Stock">Out Of Stock</option>
               </select>
+              <ErrorMessage
+                name="productAvailability"
+                component="div"
+                className="text-red-500"
+              />
 
               {/* FREE SHIPPING */}
               <label className="flex gap-2 items-center">
@@ -197,6 +218,11 @@ const Products = () => {
                 />
                 Free Shipping
               </label>
+              <ErrorMessage
+                name="freeShipping"
+                component="div"
+                className="text-red-500"
+              />
 
               {/* DESCRIPTION */}
               <textarea
@@ -205,6 +231,11 @@ const Products = () => {
                 onChange={handleChange}
                 className="w-full p-2 bg-slate-200 rounded"
                 placeholder="Description"
+              />
+              <ErrorMessage
+                name="productDescription"
+                component="div"
+                className="text-red-500"
               />
 
               {/* IMAGE */}
@@ -222,13 +253,13 @@ const Products = () => {
                 {loading
                   ? "Saving..."
                   : editingProduct
-                  ? "Update Product"
-                  : "Create Product"}
+                    ? "Update Product"
+                    : "Create Product"}
               </button>
 
               {editingProduct && (
                 <button
-                  type="button"
+                  type="submit"
                   onClick={() => setEditingProduct(null)}
                   className="bg-gray-500 text-white px-4 py-2 rounded w-full"
                 >
@@ -247,10 +278,9 @@ const Products = () => {
             key={p.id}
             className="w-72 bg-white shadow rounded overflow-hidden"
           >
-
             {/* IMAGE */}
             <img
-              src={`http://localhost:3000/${p.productImage}`}
+              src={`http://localhost:3000/v1/uploads/${p.productImage}`}
               alt="product"
               className="h-40 w-full object-cover"
             />
@@ -259,15 +289,14 @@ const Products = () => {
               <h2 className="font-bold">{p.productName}</h2>
               <p className="text-green-600">Rs: {p.productPrice}</p>
               <p className="text-sm">{p.productCategory}</p>
-              <p className="text-xs text-gray-500">
-                {p.productAvailability}
-              </p>
+              <p className="text-xs text-gray-500">{p.productAvailability}</p>
               <p className="text-xs">
                 {p.freeShipping ? "Free Shipping" : "No Free Shipping"}
               </p>
 
               {/* ACTIONS */}
               <div className="flex gap-3 mt-3">
+                {/* edit */}
                 <button
                   onClick={() => setEditingProduct(p)}
                   className="bg-yellow-500 p-2 rounded text-white"
@@ -275,6 +304,7 @@ const Products = () => {
                   <MdModeEdit />
                 </button>
 
+                {/* delete */}
                 <button
                   onClick={() => deleteProduct(p.id)}
                   className="bg-red-600 p-2 rounded text-white"
@@ -286,7 +316,6 @@ const Products = () => {
           </div>
         ))}
       </div>
-
     </div>
   );
 };

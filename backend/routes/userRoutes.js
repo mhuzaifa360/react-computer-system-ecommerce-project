@@ -6,7 +6,7 @@ const route = express.Router();
 
 route.post("/login", loginUser)
 route.post("/createUser", createUser)
-route.get("/getUser",authenticateUser, getUser)
+route.get("/getUser", getUser)
 route.delete("/deleteUser/:id",authenticateUser, deleteUser)
 route.get("/getSingleUser/:id",authenticateUser, getSingleUser)
 route.put("/updateUser/:id",authenticateUser, updateUser)

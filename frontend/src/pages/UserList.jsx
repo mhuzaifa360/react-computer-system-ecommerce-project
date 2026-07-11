@@ -30,10 +30,22 @@ function UserList() {
   };
 
   // FUNCTION FOR GET ALL USERS DATA
-  const getUsers = async () => {
-    const response = await axios.get("http://localhost:3000/v1/getUser");
-    setUsers(response.data.data);
-  };
+  const token = localStorage.getItem("userData");
+  console.log("token",token);
+ const getUsers = async () => {
+
+
+  const response = await axios.get(
+    "http://localhost:3000/v1/getUser",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  setUsers(response.data.data);
+};
 
   // FOR DELETE USER
   const deleteUser = async (id) => {
@@ -64,7 +76,7 @@ function UserList() {
 
   useEffect(() => {
     getUsers();
-  }, [singleUser]);
+  }, []);
 
   return (
     <div>
@@ -130,7 +142,7 @@ function UserList() {
                   type="text"
                   className="bg-slate-200 p-2 rounded-md"
                   placeholder="LastName ..."
-                  value={values?.firstName}
+                  value={values?.lastName}
                   onChange={handleChange}
                   // value={item.lastName}
                 />
@@ -143,7 +155,7 @@ function UserList() {
                   type="email"
                   className="bg-slate-200 p-2 rounded-md"
                   placeholder="Email ..."
-                  value={values?.firstName}
+                  value={values?.email}
                   onChange={handleChange}
                 />
                 <ErrorMessage name="email" />
@@ -155,7 +167,7 @@ function UserList() {
                   type="password"
                   className="bg-slate-200 p-2 rounded-md"
                   placeholder=". . . . ."
-                  value={values?.firstName}
+                  value={values?.password}
                   onChange={handleChange}
                 />
                 <ErrorMessage name="password" />
@@ -167,7 +179,7 @@ function UserList() {
                   type="role"
                   className="bg-slate-200 p-2 rounded-md"
                   placeholder="Role ..."
-                  value={values?.firstName}
+                  value={values?.role}
                   onChange={handleChange}
                 />
                 <ErrorMessage name="role" />

@@ -67,7 +67,7 @@ export const getProduct = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      message: "Retrieve all Category successfully",
+      message: "Retrieve all product successfully",
       data: allProducts,
     });
   } catch (error) {
@@ -79,25 +79,25 @@ export const getProduct = async (req, res) => {
   }
 };
 
-// for delete Category
+// for delete product
 export const deleteProduct = async (req, res) => {
   try {
     const productID = req.params.id;
-    // Category is table name
+    // product is table name
     const existProduct = await products.findOne({ where: { id: productID } });
-    // console.log("exist Category", existProduct);
+    // console.log("exist product", existProduct);
 
-    // IF Category ID NOT FOUND
+    // IF product ID NOT FOUND
     if (!existProduct) {
       res.status(404).json({
         success: false,
         message: `Product not found with this id ${productID}`,
       });
     }
-    // DELETE Category WITH MATCHING ID
+    // DELETE product WITH MATCHING ID
     await existProduct.destroy();
 
-    // IF DELETE THAN SHOW A MESSAGE AND DELETED Category
+    // IF DELETE THAN SHOW A MESSAGE AND DELETED product
     res.json({
       success: true,
       message: `Product deleted successfully with this ${productID} id `,
@@ -114,21 +114,21 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-// GET SINGLE Category
+// GET SINGLE product
 export const getSingleProduct = async (req, res) => {
   try {
     const productID = req.params.id;
-    // category is table name
+    // product is table name
     const existProduct = await products.findByPk(productID);
 
-    // IF Category ID NOT FOUND
+    // IF product ID NOT FOUND
     if (!existProduct) {
       res.status(404).json({
         success: false,
         message: `Product not found with this ${productID} id`,
       });
     }
-    // IF DELETE THAN SHOW A MESSAGE AND DELETED Category
+    // IF DELETE THAN SHOW A MESSAGE AND DELETED product
     res.json({
       success: true,
       message: `get single product successfully with this ${productID} id `,
@@ -143,29 +143,55 @@ export const getSingleProduct = async (req, res) => {
   }
 };
 
-// UPDATE Category
+// UPDATE product
 export const updateProduct = async (req, res) => {
   try {
     const productID = req.params.id;
-    const updatedCategory = req.body;
+    const {
+      productName,
+      productPrice,
+      productAvailability,
+      productCategory,
+      freeShipping,
+      productDescription
+    } = req.body;
 
-    // Category is table name
-    const existProduct = await category.findByPk(productID);
+    // product is table name
+    const existProduct = await products.findByPk(productID);
 
-    // IF Category ID NOT FOUND
+    // IF product ID NOT FOUND
     if (!existProduct) {
       res.status(404).json({
         success: false,
-        message: `Category not found with this id ${existProduct}`,
+        message: `Product not found with this id ${existProduct}`,
       });
     }
-    const categoryData = await existProduct.update(updatedCategory);
 
-    // IF DELETE THAN SHOW A MESSAGE AND DELETED Category
+    const updatedProduct = {
+      productName: productName || existProduct.productName,
+      productPrice: productPrice || existProduct.productPrice,
+      productAvailability: productAvailability || existProduct.productAvailability,
+      productCategory: productCategory || existProduct.productCategory,
+      freeShipping: freeShipping || existProduct.freeShipping,
+      productDescription: productDescription || existProduct.productDescription,
+    };
+
+    if (req.file) {
+      // Delete old image
+      const oldImagePath = path.join(__dirname, "../uploads/", existProduct.productImage);
+      // console.log("oldImagePath", oldImagePath)
+      if (fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
+      }
+      updatedProduct.productImage = req.file.filename;
+    }
+    const productData = await existProduct.update(updatedProduct);
+
+    // IF DELETE THAN SHOW A MESSAGE AND DELETED product
     res.json({
       success: true,
-      message: `Category updated successfully `,
-      data: categoryData,
+      message: `product updated successfully `,
+      data: productData,
     });
   } catch (error) {
     res.status(500).json({

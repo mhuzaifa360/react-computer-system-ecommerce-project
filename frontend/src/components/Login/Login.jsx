@@ -41,7 +41,7 @@ const Login = () => {
       // TOKEN SAVE
         localStorage.setItem(
           "userData",
-          JSON.stringify(response.data.data)
+          JSON.stringify(response.data)
         );
         
       // RESET FORM
